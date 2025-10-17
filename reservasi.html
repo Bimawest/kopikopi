@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Welcome to Coffee Shop, your go-to place for the best coffee in town. Explore our wide range of coffee blends and enjoy a unique coffee experience." />
+    <meta name="keywords"
+        content="coffee, coffee shop, latte, butterscotch, taro latte, pandan coffee, mango yakult, nuttela blend" />
+    <meta name="author" content="BimaTech" />
+    <title>Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    /* General Styles */
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f0e6;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Styles */
+    .header {
+        background-color: black;
+        color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 888;
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-container img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid white;
+        margin-right: 1rem;
+    }
+
+    .logo-container span {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .nav {
+        display: flex;
+        gap: 2rem;
+        background-color: transparent;
+    }
+
+    .nav i {
+        cursor: pointer;
+        color: white;
+    }
+
+    .nav a:hover {
+        background-color: transparent;
+        color: black;
+        border: 1px solid white;
+    }
+
+    #nav {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-bottom: 10px;
+        margin-right: 20px;
+    }
+
+    #nav a {
+        background-color: rgba(232, 230, 244, 1);
+        border-radius: 10px;
+        padding: 5px 20px;
+        border: 1px solid white;
+        text-decoration: none;
+        color: black;
+        font-size: 250%;
+    }
+
+    .nav a[href="keranjang.html"] {
+        position: relative;
+    }
+
+    #beranda:hover {
+        background-color: white;
+        border-radius: 10px;
+        border: 1px solid white;
+        text-decoration: none;
+        color: black;
+    }
+
+    .cart-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    /* Loading Section Styles */
+    .loading-spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid black;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .notif {
+        position: fixed;
+        /* Change to fixed to keep it centered on the screen */
+        top: 50%;
+        /* Center vertically */
+        left: 50%;
+        /* Center horizontally */
+        transform: translate(-50%, -50%);
+        /* Adjust position to truly center */
+        width: 90%;
+        height: auto;
+        z-index: 998;
+        border: 1px black solid;
+        border-radius: 5%;
+        background-image: url("img/biji.jpeg");
+        background-size: cover;
+        display: none;
+    }
+
+    .notif .notifdes {
+        padding: 10%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+        background-color: rgba(30, 30, 30, 12%);
+        backdrop-filter: blur(3px);
+        color: white;
+    }
+
+    .notif .notifdes h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .notifdes button {
+        font-size: 1.5rem;
+        background-color: black;
+        width: 30%;
+        border: 1px white solid;
+        border-radius: 20%;
+        margin-top: 1rem;
+    }
+
+    /* reservasi */
+    .reservasi {
+        background-color: rgba(30, 30, 30, 12%);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .reservasi h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 400;
+        color: white;
+        font-family: Fredericka the Great;
+    }
+
+    .reservasi input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    /*style menu reservasi*/
+    #menu {
+        width: 100%;
+        min-height: 40px;
+        resize: none;
+        line-height: 1.5;
+        padding: 10px;
+        border: 1px black solid;
+        border-radius: 5px;
+    }
+
+    /* akhir kode menu reservasi */
+
+    .reservasi button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .reservasi button:hover {
+        background-color: #218838;
+    }
+
+
+    /* Product Grid Styles */
+    .products {
+        padding: 2rem 0;
+        margin-top: 1rem;
+    }
+
+    main h1 {
+        text-align: start;
+        font-size: 2rem;
+        font-weight: 400;
+        margin-top: 1rem;
+        font-family: Fredericka the Great;
+        color: white;
+    }
+
+    input[type="checkbox"] {
+        display: flex;
+        justify-content: flex-end;
+        width: 20px;
+        height: 20px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .jumblah {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .jumblah button.minus,
+    .jumblah button.plus {
+        background-color: black;
+        /* Warna latar belakang tombol */
+        color: white;
+        /* Warna teks tombol */
+        border: none;
+        /* Menghilangkan border */
+        border-radius: 50%;
+        /* Membuat tombol bulat */
+        width: 30px;
+        /* Lebar tombol */
+        height: 30px;
+        /* Tinggi tombol */
+        font-size: 12px;
+        /* Ukuran font */
+        padding: 0;
+        /* Menghilangkan padding */
+        cursor: pointer;
+        /* Mengubah kursor saat dihover */
+    }
+
+    .jumblah input.quantity {
+        width: 100px;
+        /* Lebar input */
+        text-align: center;
+        /* Pusatkan teks di input */
+        border: 1px solid black;
+        /* Garis tepi input */
+        border-radius: 5px;
+        /* Sudut melengkung input */
+        padding: 2px;
+        /* Ruang dalam input */
+        font-size: 12px;
+        /* Ukuran font input */
+    }
+
+    .cart {
+        margin-left: 1rem;
+        padding: 0.5rem;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Gaya untuk tombol keranjang yang dinonaktifkan */
+    .cart:disabled {
+        background-color: #cccccc;
+        /* Warna latar belakang abu-abu */
+        color: #666666;
+        /* Warna teks abu-abu gelap */
+        cursor: not-allowed;
+        /* Mengubah kursor menjadi tanda "tidak diizinkan" */
+        opacity: 0.7;
+        /* Mengurangi opacity untuk efek "tidak aktif" */
+        border: 1px solid #999999;
+        /* Garis tepi abu-abu */
+    }
+
+    /* Gaya untuk tombol keranjang yang aktif */
+    .cart:not(:disabled) {
+        background-color: black;
+        /* Warna latar belakang hitam */
+        color: white;
+        /* Warna teks putih */
+        cursor: pointer;
+        /* Kursor pointer */
+        opacity: 1;
+        /* Opacity penuh */
+        border: 1px solid black;
+        /* Garis tepi hitam */
+    }
+
+    .description {
+        position: fixed;
+        /* Membuat elemen tetap di posisi yang sama di layar */
+        top: 50%;
+        /* Menempatkan elemen di tengah vertikal */
+        left: 50%;
+        /* Menempatkan elemen di tengah horizontal */
+        transform: translate(-50%, -50%);
+        /* Menggeser elemen ke tengah */
+        z-index: 999;
+        /* Memastikan elemen berada di atas elemen lain */
+        width: 50%;
+        /* Lebar elemen */
+        height: auto;
+        /* Tinggi elemen menyesuaikan konten */
+        background-color: white;
+        /* Warna latar belakang */
+        text-align: center;
+        /* Teks di tengah */
+        font-weight: bold;
+        /* Teks tebal */
+        border: 1px black solid;
+        /* Garis tepi */
+        border-radius: 15px;
+        /* Sudut melengkung */
+        padding: 0.5rem;
+        /* Ruang dalam */
+        display: none;
+        /* Awalnya disembunyikan */
+    }
+
+    .description img {
+        border-radius: 20px;
+        /* Sudut melengkung untuk gambar */
+    }
+
+    .description button {
+        color: white;
+        /* Warna teks tombol */
+        background-color: black;
+        /* Warna latar belakang tombol */
+        width: 20%;
+        /* Lebar tombol */
+        height: 50%;
+        /* Tinggi tombol */
+        margin-bottom: 10px;
+        /* Ruang bawah */
+        border-radius: 5px;
+        /* Sudut melengkung */
+    }
+
+    .product-item {
+        background-image: url("img/kopi.jpg");
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    body {
+        background-image: url(img/papan.jpeg);
+        background-size: 100% 50%;
+    }
+
+
+
+    @media (min-width: 768px) {
+        .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+    }
+
+    .product-item {
+        background-color: white;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .product-item h3 {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        background-color: black;
+        color: white;
+        border-radius: 9999px;
+    }
+
+    .product-item .price {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        background-color: black;
+        color: white;
+        border-radius: 9999px;
+    }
+
+    .product-item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 15%;
+    }
+
+    .product-item .price {
+        font-size: 1.125rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .product-item button {
+        background-color: black;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        cursor: pointer;
+    }
+
+    .product-item {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer Styles */
+    .footer {
+        background-color: black;
+        color: white;
+        padding: 2rem 0;
+    }
+
+    .footer .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .footer-logo img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid white;
+        margin-bottom: 1rem;
+    }
+
+    .footer-logo p {
+        font-size: 1rem;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links ul li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-links ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .footer-links ul li a:hover {
+        color: #a0aec0;
+    }
+
+    .footer-contact p {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-social a {
+        position: relative;
+        margin: 3px;
+    }
+
+    @media (max-width: 767px) {
+        .container {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .nav {
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        .nav a {
+            font-size: 1.5rem;
+        }
+
+        .reservasi {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .product-item {
+            padding: 15px;
+        }
+
+        .jumblah {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 10px;
+        }
+
+        .jumblah input.quantity {
+            width: 30px;
+            /* Lebar input */
+        }
+
+        .footer-logo img {
+            align-self: center;
+            margin: 0 auto;
+        }
+
+        .footer .container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-links ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-contact,
+        .footer-social {
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+<body>
+    <div id="loading-spinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img id="logo" alt="Logo Coffee Shop" src="img/logo.png" />
+                <span>Coffe Shop</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" id="beranda">Beranda</a>
+                <a href="keranjang.html" title="Shopping Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge">0</span> <!-- Badge untuk jumlah item -->
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <form class="reservasi" id="reservasiForm">
+        <h1>FORM RESERVASI</h1>
+        <p style="color: white;">Nama Pemesan</p><input type="text" id="nama" placeholder="" required />
+        <p style="color: white;">Jumlah Pengunjung</p><input type="number" id="jumlah" value="0" placeholder="Jumlah"
+            required />
+        <p style="color: white;">Tanggal</p><input type="date" id="tanggal" placeholder="Tanggal/Hari" required />
+        <p style="color: white;">Jam</p><input type="time" id="jam" placeholder="Jam" required />
+        <p style="color: white;">List Pesanan</p>
+        <textarea id="menu" placeholder="Silahkan input jumblah menu lalu centang pesanan anda" required></textarea>
+        <p style="color: white;">Note</p><input type="text" id="note" placeholder="" style="min-height: 10vh;" />
+        <button type="submit">Reservasi</button>
+    </form>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Product Grid -->
+        <section id="products" class="products">
+            <div class="menu">
+                <h1>Espresso Based</h1>
+                <div class="product-grid">
+                    <!-- Product Item -->
+                    <div class="product-item">
+                        <input type="checkbox" name="esspreso" id="esspreso">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Espresso" src="img/esspreso.jpg" />
+                        <h3>Espresso</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/esspreso.jpg" alt="" />
+                        <h3>Espresso</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="picollo" id="picollo">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Picollo" src="img/picollo.jpg" />
+                        <h3>Picollo</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/picollo.jpg" alt="" />
+                        <h3>Picollo</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="affogato" id="affogato">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Affogato" src="img/affogato.jpg" />
+                        <h3>Affogato</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/affogato.jpg" alt="" />
+                        <h3>Affogato</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="americano" id="americano">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Americano" src="img/americano.jpg" />
+                        <h3>Americano</h3>
+                        <p></p>
+                        <p class="price">Rp15.500</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/americano.jpg" alt="" />
+                        <h3>Americano</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="capuchino" id="capuchino">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Capuchino" src="img/capuchino.jpg" />
+                        <h3>Capuchino</h3>
+                        <p></p>
+                        <p class="price">Rp14.800</p>
+                        <button class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/capuchino.jpg" alt="" />
+                        <h3>Capuchino</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="Caffe Latte" id="Caffe Latte">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Caffe Latte" src="img/caffe_latte.jpg" />
+                        <h3>Caffe Latte</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/caffe_latte.jpg" alt="" />
+                        <h3>Caffe Latte</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--non coffee-->
+            <div class="menu">
+                <h1>Non Coffee</h1>
+                <div class="product-grid">
+                    <!-- Product Item -->
+                    <div class="product-item">
+                        <input type="checkbox" name="taro" id="taro">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Taro" src="img/taro.jpg" />
+                        <h3>Taro</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/taro.jpg" alt="" />
+                        <h3>Taro</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="matcha" id="matcha">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Matcha" src="img/matcha.jpg" />
+                        <h3>Matcha</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/matcha.jpg" alt="" />
+                        <h3>Matcha</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="avocado" id="avocado">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Avocado" src="img/avocado.jpg" />
+                        <h3>Avocado</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/avocado.jpg" alt="" />
+                        <h3>Avocado</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="Red Velvet" id="Red Velvet">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Red Velvet" src="img/red_velvet.jpg" />
+                        <h3>Red Velvet</h3>
+                        <p></p>
+                        <p class="price">Rp15.500</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/red_velvet.jpg" alt="" />
+                        <h3>Red Velvet</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="coklat" id="coklat">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Premium Choclate" src="img/coklat.jpg" />
+                        <h3>Premium Choclate</h3>
+                        <p></p>
+                        <p class="price">Rp14.800</p>
+                        <button class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/coklat.jpg" alt="" />
+                        <h3>Premium Choclate</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Refresher-->
+            <div class="menu">
+                <h1>Refresher</h1>
+                <div class="product-grid">
+                    <!-- Product Item -->
+                    <div class="product-item">
+                        <input type="checkbox" name="Orange" id="Orange">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Orange Coffe" src="img/orange_coffe.jpg" />
+                        <h3>Orange Coffe</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/orange_coffe.jpg" alt="" />
+                        <h3>Orange Coffe</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="V60" id="V60">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="V60" src="img/V60.jpg" />
+                        <h3>V60</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/V60.jpg" alt="" />
+                        <h3>V60</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="yakult" id="yakult">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Strawberry Yakult" src="img/strawberry_yakult.jpg" />
+                        <h3>Strawberry Yakult</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/strawberry_yakult.jpg" alt="" />
+                        <h3>Strawberry Yakult</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Premium Tea-->
+            <div class="menu">
+                <h1>Premium Tea</h1>
+                <div class="product-grid">
+                    <!-- Product Item -->
+                    <div class="product-item">
+                        <input type="checkbox" name="thai" id="thai">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Thai Tea" src="img/thai_tea.jpg" />
+                        <h3>Thai Tea</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/thai_tea.jpg" alt="" />
+                        <h3>Thai Tea</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="lemon" id="lemon">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Lemon Tea" src="img/lemon_tea.jpg" />
+                        <h3>Lemon Tea</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/lemon_tea.jpg" alt="" />
+                        <h3>Lemon Tea</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+
+                    <div class="product-item">
+                        <input type="checkbox" name="jasmine" id="jasmine">
+                        <div class="jumblah">
+                            <button class="minus">-</button>
+                            <input type="text" value="0" class="quantity">
+                            <button class="plus">+</button>
+                            </button>
+                        </div>
+                        <img alt="Jasmine Tea" src="img/jasmine_tea.jpg" />
+                        <h3>Jasmine Tea</h3>
+                        <p></p>
+                        <p class="price">Rp15.000</p>
+                        <button id="btnmenu" class="add-to-cart">
+                            Detail
+                        </button>
+                    </div>
+                    <!--box deskripsi menu-->
+                    <div class="description">
+                        <img src="img/jasmine_tea.jpg" alt="" />
+                        <h3>Jasmine Tea</h3>
+                        <p>
+                            (penjelasan product)
+                        </p>
+                        <button class="btndes">O K</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--food-->
+            <h1>Main Course</h1>
+            <div class="product-grid">
+                <!-- Product Item -->
+                <div class="product-item">
+                    <input type="checkbox" name="nasi" id="nasi">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Nasi Goreng" src="img/nasi_goreng.jpg" />
+                    <h3>Nasi Goreng</h3>
+                    <p></p>
+                    <p class="price">Rp15.000</p>
+                    <button id="btnmenu" class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/nasi_goreng.jpg" alt="nasi_goreng" />
+                    <h3>Nasi Goreng</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+
+                <div class="product-item">
+                    <input type="checkbox" name="madu" id="madu">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Chicken Honey" src="img/chicken_honey.jpg" />
+                    <h3>Chicken Honey</h3>
+                    <p></p>
+                    <p class="price">Rp15.500</p>
+                    <button id="btnmenu" class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/chicken_honey.jpg" alt="" />
+                    <h3>Chicken Honey</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+
+                <div class="product-item">
+                    <input type="checkbox" name="matah" id="matah">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Ayam Sambal Matah" src="img/matah.jpg" />
+                    <h3>matah</h3>
+                    <p></p>
+                    <p class="price">Rp15.500</p>
+                    <button id="btnmenu" class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/matah.jpg" alt="" />
+                    <h3>Ayam Sambal Matah</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+            </div>
+
+            <h1>Snack</h1>
+            <div class="product-grid">
+                <!-- Product Item -->
+                <div class="product-item">
+                    <input type="checkbox" name="dimsum" id="dimsum">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Dimsum" src="img/dimsum.jpg" />
+                    <h3>Dimsum</h3>
+                    <p></p>
+                    <p class="price">Rp15.000</p>
+                    <button id="btnmenu" class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/dimsum.jpg" alt="Dimsum" />
+                    <h3>Dimsum</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+
+                <div class="product-item">
+                    <input type="checkbox" name="risol" id="risol">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Risol" src="img/risol.jpg" />
+                    <h3>Risol</h3>
+                    <p></p>
+                    <p class="price">Rp15.500</p>
+                    <button id="btnmenu" class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/risol.jpg" alt="" />
+                    <h3>Risol</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+
+                <div class="product-item">
+                    <input type="checkbox" name="tahu" id="tahu">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Tahu" src="img/tahu.jpg" />
+                    <h3>Tahu</h3>
+                    <p></p>
+                    <p class="price">Rp14.800</p>
+                    <button class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/tahu.jpg" alt="" />
+                    <h3>Tahu</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+
+                <div class="product-item">
+                    <input type="checkbox" name="sate" id="sate">
+                    <div class="jumblah">
+                        <button class="minus">-</button>
+                        <input type="text" value="0" class="quantity">
+                        <button class="plus">+</button>
+                        </button>
+                    </div>
+                    <img alt="Sate Thaichan" src="img/sate.jpg" />
+                    <h3>Sate Thaichan</h3>
+                    <p></p>
+                    <p class="price">Rp14.800</p>
+                    <button class="add-to-cart">
+                        Detail
+                    </button>
+                </div>
+                <!--box deskripsi menu-->
+                <div class="description">
+                    <img src="img/sate.jpg" alt="" />
+                    <h3>Sate Thaichan</h3>
+                    <p>
+                        (penjelasan product)
+                    </p>
+                    <button class="btndes">O K</button>
+                </div>
+        </section>
+    </main>
+
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <img id="logofoot" alt="Logo Coffee Shop" src="img/logo.png" />
+                <p>© BimaTech<br />CoffeeShop, 2025</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="#">Kopi Biji</a></li>
+                    <li><a href="#">Pembayaran</a></li>
+                    <li><a href="#">Pengiriman</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <a href="https://wa.me/6285246196402?text=Halo,%20kak%20saya..." target="_blank">(+62)85246196402</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/m.bimarizki/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Loading spinner
+        window.addEventListener("load", () => {
+            const spinner = document.getElementById("loading-spinner");
+            spinner.style.display = "none";
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Mendapatkan semua tombol "Detail"
+            const detailButtons = document.querySelectorAll(".add-to-cart");
+
+            // Mendapatkan semua elemen deskripsi
+            const descriptions = document.querySelectorAll(".description");
+
+            // Menambahkan event listener ke setiap tombol "Detail"
+            detailButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    // Menampilkan deskripsi yang sesuai
+                    descriptions[index].style.display = "block";
+                });
+            });
+
+            // Menambahkan event listener ke setiap tombol "OK" pada deskripsi
+            const okButtons = document.querySelectorAll(".btndes");
+            okButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    // Menutup deskripsi yang sesuai
+                    descriptions[index].style.display = "none";
+                });
+            });
+        });
+    </script>
+
+    <!--script reservasi-->
+    <script>
+        document.getElementById('reservasiForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Mencegah form dari pengiriman default
+
+            // Mengambil nilai dari input form
+            const nama = document.getElementById('nama').value;
+            const jumlah = document.getElementById('jumlah').value;
+            const tanggal = document.getElementById('tanggal').value;
+            const jam = document.getElementById('jam').value;
+            const menu = document.getElementById('menu').value;
+            const note = document.getElementById('note').value;
+
+            // Membuat pesan yang akan dikirim
+            const message = `Halo, saya ingin melakukan reservasi dengan detail sebagai berikut:\n\nNama: ${nama}\nJumlah Orang: ${jumlah}\nTanggal: ${tanggal}\nJam: ${jam}\nMenu Yang Dipesan: ${menu}\nCatatan: ${note}`;
+
+            // Mengencode pesan untuk URL
+            const encodedMessage = encodeURIComponent(message);
+
+            // Nomor WhatsApp tujuan (ganti dengan nomor yang sesuai)
+            const phoneNumber = '6285246196402'; // Contoh nomor WhatsApp
+
+            // Membuka WhatsApp dengan pesan yang sudah diisi
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        });
+    </script>
+
+    <!--script checkbox-->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Mendapatkan semua checkbox, input jumlah, dan tombol plus/minus
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const quantityInputs = document.querySelectorAll('.quantity');
+            const plusButtons = document.querySelectorAll('.plus');
+            const minusButtons = document.querySelectorAll('.minus');
+            const menuInput = document.getElementById('menu');
+
+            // Fungsi untuk memperbarui daftar menu di form
+            function updateMenuList() {
+                let menuList = [];
+                checkboxes.forEach((checkbox, index) => {
+                    if (checkbox.checked) {
+                        const productName = checkbox.parentElement.querySelector('h3').textContent;
+                        const quantity = quantityInputs[index].value;
+                        menuList.push(`${productName} (${quantity})`);
+                    }
+                });
+                menuInput.value = menuList.join(', ');
+            }
+
+            // Menambahkan event listener untuk tombol plus
+            plusButtons.forEach((button, index) => {
+                button.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    let quantity = parseInt(quantityInputs[index].value) || 0;
+                    quantity += 1;
+                    quantityInputs[index].value = quantity;
+                    checkboxes[index].disabled = quantity === 0; // Nonaktifkan checkbox jika jumlah 0
+                    updateMenuList();
+                });
+            });
+
+            // Menambahkan event listener untuk tombol minus
+            minusButtons.forEach((button, index) => {
+                button.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    let quantity = parseInt(quantityInputs[index].value) || 0;
+                    if (quantity > 0) {
+                        quantity -= 1;
+                        quantityInputs[index].value = quantity;
+                        checkboxes[index].disabled = quantity === 0; // Nonaktifkan checkbox jika jumlah 0
+                        if (quantity === 0) {
+                            checkboxes[index].checked = false; // Uncheck checkbox jika jumlah 0
+                        }
+                        updateMenuList();
+                    }
+                });
+            });
+
+            // Menambahkan event listener untuk checkbox
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked && parseInt(quantityInputs[index].value) === 0) {
+                        checkbox.checked = false; // Uncheck jika jumlah 0
+                    }
+                    updateMenuList();
+                });
+            });
+
+            // Inisialisasi: Nonaktifkan checkbox jika jumlah 0
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.disabled = parseInt(quantityInputs[index].value) === 0;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const addToCartButtons = document.querySelectorAll(".cart");
+            const cartBadge = document.getElementById("cart-badge");
+
+            // Fungsi untuk memperbarui badge keranjang
+            function updateCartBadge() {
+                const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+                cartBadge.textContent = cartItems.length; // Update jumlah item di badge
+
+                // Sembunyikan badge jika jumlah item adalah 0
+                if (cartItems.length === 0) {
+                    cartBadge.style.display = "none";
+                } else {
+                    cartBadge.style.display = "block";
+                }
+            }
+
+            // Update badge saat halaman dimuat
+            updateCartBadge();
+
+            // Add event listener to all "+" buttons
+            addToCartButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const imgSrc = button.getAttribute("data-img"); // Get the image source
+                    const itemName = button.getAttribute("data-name"); // Get the item name
+                    const quantity = button.parentElement.querySelector(".quantity").value; // Get the quantity
+
+                    // Create a cart item object
+                    const cartItem = {
+                        imgSrc: imgSrc,
+                        itemName: itemName,
+                        quantity: quantity,
+                    };
+
+                    // Retrieve existing cart items from localStorage
+                    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+                    // Add the new item to the cart
+                    cartItems.push(cartItem);
+
+                    // Save the updated cart back to localStorage
+                    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+                    // Update the cart badge
+                    updateCartBadge();
+
+                    // Animate the image to the cart
+                    animateImageToCart(imgSrc);
+                });
+            });
+
+            // Function to animate the image to the cart
+            function animateImageToCart(imgSrc) {
+                const img = document.createElement("img");
+                img.src = imgSrc;
+                img.style.position = "fixed";
+                img.style.width = "50px";
+                img.style.height = "50px";
+                img.style.borderRadius = "50%";
+                img.style.transition = "all 1s ease";
+                document.body.appendChild(img);
+
+                const cartIcon = document.querySelector(".fa-shopping-cart");
+                const cartIconRect = cartIcon.getBoundingClientRect();
+
+                const imgRect = img.getBoundingClientRect();
+                const startX = imgRect.left;
+                const startY = imgRect.top;
+                const endX = cartIconRect.left + cartIconRect.width / 2 - imgRect.width / 2;
+                const endY = cartIconRect.top + cartIconRect.height / 2 - imgRect.height / 2;
+
+                img.style.left = `${startX}px`;
+                img.style.top = `${startY}px`;
+
+                setTimeout(() => {
+                    img.style.left = `${endX}px`;
+                    img.style.top = `${endY}px`;
+                    img.style.opacity = "1";
+                }, 10);
+
+                setTimeout(() => {
+                    img.remove();
+                }, 1010);
+            }
+        });
+    </script>
+
+    <!--scrip daftar pesanan fungsi scroll-->
+    <script>
+        // Fungsi untuk memperbarui tinggi input menu
+        const textarea = document.getElementById('menu');
+
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto'; // Reset height to auto to recalculate
+            this.style.height = (this.scrollHeight) + 'px'; // Set height to scrollHeight
+        });
+    </script>
+
+
+</body>
+
+</html>
