@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #6f4e37;
+    }
+    navbar img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+    }
+    navbar ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    navbar ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    header {
+        text-align: center;
+        padding: 50px;
+        background-color: #d2b48c;
+        color: #4b2e1e;
+ 
+    }
+
+    header h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    header p {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    header img {
+        height: 300px;
+        width: auto;
+        margin: 0 10px;
+        border-radius: 15px;
+    }
+
+    header #meja {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        margin: 0;
+    }
+
+    header #front {
+       position: absolute;
+       right: 50%;
+       z-index: 0;
+    }
+
+    header #left, header #right {
+        display: none;
+    }
+</style>
+
+<body>
+    <navbar>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJJ5D3ERD1WpJqHKLlXI9m2m7L7bmVGmOWvg&s" alt="logo">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </navbar>
+    <header>
+        <h1>Kopi Kopi</h1>
+        <p>Your daily dose of freshly brewed coffee</p>
+        <img id="meja" src="https://www.tuku.coffee/_next/static/media/table_desktop.4ae3c07c.webp" alt="">
+        <img id="front" src="https://www.tuku.coffee/_next/static/media/01_barista_pose_front.5aa6b1d4.webp" alt="">
+        <img id="left" src="https://www.tuku.coffee/_next/static/media/01_barista_pose_left.9d8b95b6.webp" alt="">
+        <img id="right" src="https://www.tuku.coffee/_next/static/media/01_barista_pose_right.f4a05dc7.webp" alt="">
+
+    </header>    
+</body>
+
+<script>
+    const frontImage = document.getElementById('front');
+    const leftImage = document.getElementById('left');
+    const rightImage = document.getElementById('right');
+
+    (function() {
+        // smooth follow + direction detection + idle -> front center
+        let lastMouseX = window.innerWidth / 2;
+        let targetX = lastMouseX;
+        let currentX = lastMouseX;
+        let lastMoveTime = Date.now();
+        const idleDelay = 300; // ms before snapping to front
+        const moveThreshold = 4; // px to consider as movement
+        let lastDir = 'none';
+
+        // vertical lift so character sits slightly behind/above the table
+        // increase this value to raise the barista further behind the table
+        const verticalLift = 250; // px upward (appears behind the table)
+        // prepare images
+        const imgs = [frontImage, leftImage, rightImage];
+        imgs.forEach(img => {
+            img.style.position = 'absolute';
+            img.style.pointerEvents = 'none';
+            img.style.transition = 'opacity 180ms ease, left 180ms ease, top 180ms ease';
+            img.style.display = 'block';
+            img.style.willChange = 'left, top, opacity';
+            // ensure images sit behind the table (table has z-index:1)
+            img.style.zIndex = '0';
+        });
+
+        // compute top inside header so images stay vertically aligned (lifted up)
+        let headerRect = frontImage.parentElement.getBoundingClientRect();
+        let frontRectTop = frontImage.getBoundingClientRect().top;
+        let baseTop = Math.round(frontRectTop - headerRect.top) - verticalLift;
+        imgs.forEach(img => img.style.top = baseTop + 'px');
+
+        // start visibility: front visible
+        frontImage.style.opacity = '1';
+        leftImage.style.opacity = '0';
+        rightImage.style.opacity = '0';
+
+        function getW(img) {
+            return Math.max(1, img.getBoundingClientRect().width || img.width || 1);
+        }
+
+        // clamp left so image never leaves viewport (with small padding)
+        function clampLeftValue(x, w) {
+            const pad = 8;
+            const min = pad;
+            const max = Math.max(pad, window.innerWidth - w - pad);
+            return Math.min(Math.max(x, min), max);
+        }
+
+        // handle resize: recalc header/top so vertical alignment stays correct
+        window.addEventListener('resize', () => {
+            headerRect = frontImage.parentElement.getBoundingClientRect();
+            frontRectTop = frontImage.getBoundingClientRect().top;
+            baseTop = Math.round(frontRectTop - headerRect.top) - verticalLift;
+            imgs.forEach(img => img.style.top = baseTop + 'px');
+        });
+
+        // mouse movement -> update target and direction
+        document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            const dx = targetX - lastMouseX;
+            if (Math.abs(dx) > moveThreshold) {
+                lastDir = dx > 0 ? 'right' : 'left';
+                // show side images based on direction
+                if (lastDir === 'right') {
+                    frontImage.style.opacity = '0';
+                    leftImage.style.opacity = '0';
+                    rightImage.style.opacity = '1';
+                } else {
+                    frontImage.style.opacity = '0';
+                    rightImage.style.opacity = '0';
+                    leftImage.style.opacity = '1';
+                }
+            }
+            lastMouseX = targetX;
+            lastMoveTime = Date.now();
+        });
+
+        // animation loop: smoothly follow targetX and apply offsets
+        function loop() {
+            // easing
+            currentX += (targetX - currentX) * 0.14;
+
+            const wFront = getW(frontImage);
+            const wLeft = getW(leftImage);
+            const wRight = getW(rightImage);
+
+            const idle = (Date.now() - lastMoveTime) > idleDelay;
+
+            if (idle) {
+                // idle => show front centered at mouse (still slightly lifted)
+                frontImage.style.opacity = '1';
+                leftImage.style.opacity = '0';
+                rightImage.style.opacity = '0';
+
+                let leftFront = (currentX - wFront / 2);
+                let leftLeft = (currentX - wLeft - 30);
+                let leftRight = (currentX + 30);
+
+                // clamp so images don't go off-screen
+                leftFront = clampLeftValue(leftFront, wFront);
+                leftLeft = clampLeftValue(leftLeft, wLeft);
+                leftRight = clampLeftValue(leftRight, wRight);
+
+                frontImage.style.left = leftFront + 'px';
+                leftImage.style.left = leftLeft + 'px';
+                rightImage.style.left = leftRight + 'px';
+
+                // keep top positioned with lift
+                frontImage.style.top = baseTop + 'px';
+                leftImage.style.top = baseTop + 'px';
+                rightImage.style.top = baseTop + 'px';
+            } else {
+                // moving => show left or right with a slight lead offset for motion feel
+                if (lastDir === 'right') {
+                    let leftR = (currentX - wRight / 2 + 18);
+                    let leftF = (currentX - wFront / 2 - 8);
+                    let leftL = (currentX - wLeft - 40);
+
+                    leftR = clampLeftValue(leftR, wRight);
+                    leftF = clampLeftValue(leftF, wFront);
+                    leftL = clampLeftValue(leftL, wLeft);
+
+                    rightImage.style.left = leftR + 'px';
+                    frontImage.style.left = leftF + 'px';
+                    leftImage.style.left = leftL + 'px';
+                } else if (lastDir === 'left') {
+                    let leftL = (currentX - wLeft / 2 - 18);
+                    let leftF = (currentX - wFront / 2 + 8);
+                    let leftR = (currentX + 40);
+
+                    leftL = clampLeftValue(leftL, wLeft);
+                    leftF = clampLeftValue(leftF, wFront);
+                    leftR = clampLeftValue(leftR, wRight);
+
+                    leftImage.style.left = leftL + 'px';
+                    frontImage.style.left = leftF + 'px';
+                    rightImage.style.left = leftR + 'px';
+                } else {
+                    // small jitterless follow when direction unknown
+                    let leftF = (currentX - wFront / 2);
+                    let leftL = (currentX - wLeft - 40);
+                    let leftR = (currentX + 40);
+
+                    leftF = clampLeftValue(leftF, wFront);
+                    leftL = clampLeftValue(leftL, wLeft);
+                    leftR = clampLeftValue(leftR, wRight);
+
+                    frontImage.style.left = leftF + 'px';
+                    leftImage.style.left = leftL + 'px';
+                    rightImage.style.left = leftR + 'px';
+                }
+                // during motion keep the same lifted top for the behind-table look
+                frontImage.style.top = baseTop + 'px';
+                leftImage.style.top = baseTop + 'px';
+                rightImage.style.top = baseTop + 'px';
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        // kick off loop after images load to get correct sizes
+        let loadedCount = 0;
+        imgs.forEach(i => {
+            if (i.complete) loadedCount++;
+            else i.addEventListener('load', () => {
+                loadedCount++;
+                if (loadedCount === imgs.length) requestAnimationFrame(loop);
+            });
+        });
+        if (loadedCount === imgs.length) requestAnimationFrame(loop);
+    })();
+</script>
+</html>
